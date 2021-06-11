@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:hk_news/src/models/news_item.dart';
+import 'package:hk_news/src/resources/repository.dart';
 import 'package:http/http.dart' as http;
 
 final _baseUrl = 'https://hacker-news.firebaseio.com/v0';
 
-class NewsApiProvider {
+class NewsApiProvider implements Source {
   http.Client client = http.Client();
 
   Future<List<int>> fetchTopIds() async {

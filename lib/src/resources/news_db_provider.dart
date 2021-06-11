@@ -1,12 +1,17 @@
 import 'dart:io';
 
 import 'package:hk_news/src/models/news_item.dart';
+import 'package:hk_news/src/resources/repository.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-class NewsDbProvider {
+class NewsDbProvider implements Source, Cache {
   Database db;
+
+  NewsDbProvider() {
+    init();
+  }
 
   Future<void> init() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
@@ -49,4 +54,12 @@ class NewsDbProvider {
   Future<int> addNewsItem(NewsItem newsItem) {
     return db.insert('NewsItems', newsItem.toMapForDb());
   }
+
+  @override
+  Future<List<int>> fetchTopIds() {
+    // TODO: implement fetchTopIds
+    throw UnimplementedError();
+  }
 }
+
+final newsDbProvider = NewsDbProvider();
